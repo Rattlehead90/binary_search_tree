@@ -10,10 +10,11 @@ class Node
   end
 
   def <=>(other)
-    value <=> other.value
+    @value <=> other.value
   end
 end
 
+# Merge sorting algorithm
 module MergeSort
   def merge_sort(array)
     return array unless array.size > 1
@@ -52,10 +53,26 @@ class Tree
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
     pretty_print(node.left_child, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left_child
-  end  
+  end
+
+  def insert(root, value)
+    return nil if @processed_array.include?(value)
+    return root = Node.new(value) if root.nil?
+
+    if root.value < value
+      root.right_child = insert(root.right_child, value)
+    else
+      root.left_child = insert(root.left_child, value)
+    end
+    root
+  end
 end
 
 test_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+puts test_tree.root.value
 puts test_tree.array.to_s
 puts test_tree.processed_array.to_s
+puts test_tree.pretty_print
+test_tree.insert(test_tree.root, 2)
+test_tree.insert(test_tree.root, 1)
 puts test_tree.pretty_print
