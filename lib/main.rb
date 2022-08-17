@@ -66,6 +66,34 @@ class Tree
     end
     root
   end
+
+  def delete(root, value)
+    return root if root.nil?
+
+    if root.value < value
+      root.right_child = delete(root.right_child, value)
+    elsif root.value > value
+      root.left_child = delete(root.left_child, value)
+    else
+      if root.left_child.nil?
+        return root.right_child
+      elsif root.right_child.nil?
+        return root.left_child
+      end
+      root.value = minimum(root.right_child)
+      root.right_child = delete(root.right_child, root.value)
+    end
+    root
+  end 
+
+  def minimum(root)
+    minimum_value = root.value
+    until root.left_child.nil?
+      minimum_value = root.left_child.value
+      root = root.left_child
+    end
+    minimum_value
+  end
 end
 
 test_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -75,4 +103,6 @@ puts test_tree.processed_array.to_s
 puts test_tree.pretty_print
 test_tree.insert(test_tree.root, 2)
 test_tree.insert(test_tree.root, 1)
+puts test_tree.pretty_print
+test_tree.delete(test_tree.root, 8)
 puts test_tree.pretty_print
