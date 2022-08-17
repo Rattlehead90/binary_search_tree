@@ -94,6 +94,13 @@ class Tree
     end
     minimum_value
   end
+
+  def find(root, value)
+    return root if root.value == value || root.nil?
+    return find(root.right_child, value) if root.value < value
+
+    find(root.left_child, value)
+  end
 end
 
 test_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -106,3 +113,4 @@ test_tree.insert(test_tree.root, 1)
 puts test_tree.pretty_print
 test_tree.delete(test_tree.root, 8)
 puts test_tree.pretty_print
+puts test_tree.find(test_tree.root, 324).value
