@@ -101,6 +101,20 @@ class Tree
 
     find(root.left_child, value)
   end
+
+  def level_order
+    result = []
+    queue = [@root]
+    return nil if @root.nil?
+    returns @array unless block_given?
+
+    until queue.empty?
+      current_node = queue.shift
+      yield current_node
+      queue.append(current_node.left_child) if current_node.left_child
+      queue.append(current_node.right_child) if current_node.right_child
+    end
+  end
 end
 
 test_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -113,4 +127,5 @@ test_tree.insert(test_tree.root, 1)
 puts test_tree.pretty_print
 test_tree.delete(test_tree.root, 8)
 puts test_tree.pretty_print
-puts test_tree.find(test_tree.root, 324).value
+
+test_tree.level_order { |node| puts node.value }
