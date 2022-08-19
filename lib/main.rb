@@ -104,10 +104,10 @@ class Tree
     return @sorted_array unless block_given?
 
     until queue.empty?
-      current_node = queue.shift
-      yield current_node
-      queue.append(current_node.left) if current_node.left
-      queue.append(current_node.right) if current_node.right
+      node = queue.shift
+      yield node
+      queue.append(node.left) if node.left
+      queue.append(node.right) if node.right
     end
   end
 
@@ -140,4 +140,29 @@ class Tree
 
     output
   end
+
+  def height(node = @root, distance = -1)
+    return distance if node.nil?
+
+    distance += 1
+    [height(node.left, distance), height(node.right, distance)].max
+  end
+
+  def depth(value, node = @root)
+    return nil if node.nil?
+
+    distance = 0
+    until node.value == value
+      distance += 1
+      node = node.left if value < node.value
+      node = node.right if value > node.value
+    end
+
+    distance
+  end
+
 end
+
+test_tree = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+test_tree.pretty_print
+puts test_tree.depth(8)
