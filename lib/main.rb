@@ -51,6 +51,8 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
+  alias pp pretty_print
+
   def insert(value, node = @root)
     return node = Node.new(value) if node.nil?
 
@@ -166,6 +168,11 @@ class Tree
     right_subtree = height(@root.right, 0)
     (left_subtree - right_subtree).between?(-1, 1)
   end
+
+  def rebalance!
+    @sorted_array = inorder
+    @root = build_tree(@sorted_array)
+  end
 end
 
 test_tree = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
@@ -177,3 +184,5 @@ test_tree.insert(14)
 test_tree.pretty_print
 
 puts test_tree.balanced?
+test_tree.rebalance!
+test_tree.pp
