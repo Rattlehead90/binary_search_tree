@@ -161,8 +161,19 @@ class Tree
     distance
   end
 
+  def balanced?
+    left_subtree = height(@root.left, 0)
+    right_subtree = height(@root.right, 0)
+    (left_subtree - right_subtree).between?(-1, 1)
+  end
 end
 
 test_tree = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+test_tree.insert(11)
+test_tree.insert(12)
+test_tree.insert(13)
+test_tree.insert(14)
+
 test_tree.pretty_print
-puts test_tree.depth(8)
+
+puts test_tree.balanced?
