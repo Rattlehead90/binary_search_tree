@@ -175,14 +175,48 @@ class Tree
   end
 end
 
-test_tree = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-test_tree.insert(11)
-test_tree.insert(12)
-test_tree.insert(13)
-test_tree.insert(14)
+# Driver Script 
 
-test_tree.pretty_print
-
+puts %(1. Create a binary search tree from an array of random numbers:)
+test_tree = Tree.new((Array.new(15) { rand(1..100) }))
+test_tree.pp
+puts %(2. Confirm that the tree is balanced by calling #balanced?: )
 puts test_tree.balanced?
+puts %(3. Print out all elements in level, pre, post, and in order: )
+puts '-- in level: '
+test_tree.level_order { |node| print "#{node.value} "}
+puts
+puts '-- pre order: '
+puts test_tree.preorder.to_s
+puts '--post order: '
+puts test_tree.preorder.to_s
+puts '--in order: '
+puts test_tree.inorder.to_s
+puts 
+puts %(4. Unbalance the tree by adding several numbers > 100: )
+test_tree.insert(120)
+test_tree.insert(130)
+test_tree.insert(110)
+test_tree.insert(150)
+test_tree.insert(10000)
+test_tree.pp
+puts 
+puts %(5. Confirm that the tree is unbalanced by calling #balanced?: )
+puts test_tree.balanced?
+puts %(6. Balance the tree by calling #rebalance!: )
 test_tree.rebalance!
 test_tree.pp
+puts 
+puts %(7. Confirm that the tree is balanced by calling #balanced?: )
+puts test_tree.balanced?
+puts %(8. Print out all elements in level, pre, post, and in order: )
+puts '-- in level: '
+test_tree.level_order { |node| print "#{node.value} "}
+puts
+puts '-- pre order: '
+puts test_tree.preorder.to_s
+puts '--post order: '
+puts test_tree.preorder.to_s
+puts '--in order: '
+puts test_tree.inorder.to_s
+puts 
